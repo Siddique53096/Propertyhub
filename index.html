@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropertyHub - Buy & Sell Properties in Pakistan</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">PropertyHub</div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <div class="nav-right" id="navRight">
+                <div class="currency">🇵🇰 PKR</div>
+                <a href="add-property.html" class="nav-link">List your property</a>
+                <div class="auth-buttons" id="authButtons">
+                    <a href="register.html" class="register-btn">Register</a>
+                    <a href="login.html" class="signin-btn">Sign in</a>
+                </div>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <span class="user-name" id="userName"></span>
+                    <a href="my-properties.html" class="nav-link">My Properties</a>
+                    <a href="favorites.html" class="nav-link">Favorites</a>
+                    <button onclick="handleLogout()" class="signin-btn">Logout</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="tabs-container">
+            <a href="#" class="tab active" onclick="switchTab(this, 'buy')">
+                <span class="tab-icon">🏠</span>
+                Buy Property
+            </a>
+            <a href="#" class="tab" onclick="switchTab(this, 'sell')">
+                <span class="tab-icon">💰</span>
+                Sell Property
+            </a>
+            <a href="#" class="tab" onclick="switchTab(this, 'commercial')">
+                <span class="tab-icon">🏢</span>
+                Commercial
+            </a>
+            <a href="#" class="tab" onclick="switchTab(this, 'projects')">
+                <span class="tab-icon">🏗️</span>
+                New Projects
+            </a>
+            <a href="#" class="tab" onclick="switchTab(this, 'trends')">
+                <span class="tab-icon">📊</span>
+                Market Trends
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="animate-on-scroll">Find Your Dream Property</h1>
+            <p class="animate-on-scroll">Buy and sell properties across Pakistan with ease and confidence</p>
+            
+            <button class="filter-toggle" onclick="toggleFilters()">
+                <span>🔍</span> Advanced Search
+            </button>
+            
+            <form class="search-form animate-on-scroll" id="searchForm" onsubmit="handleSearch(event)">
+                <div class="form-field">
+                    <div class="field-icon">📍</div>
+                    <div class="field-content">
+                        <div class="field-label">Location</div>
+                        <input type="text" placeholder="City, area or property name" id="locationInput">
+                    </div>
+                </div>
+                <div class="form-field">
+                    <div class="field-icon">🏠</div>
+                    <div class="field-content">
+                        <div class="field-label">Property Type</div>
+                        <select id="propertyTypeSelect">
+                            <option value="all">All Types</option>
+                            <option value="house">House</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="plot">Plot</option>
+                            <option value="commercial">Commercial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <div class="field-icon">💰</div>
+                    <div class="field-content">
+                        <div class="field-label">Price Range</div>
+                        <select id="priceRangeSelect">
+                            <option value="any">Any Budget</option>
+                            <option value="under-50">Under 50 Lacs</option>
+                            <option value="50-100">50L - 1 Crore</option>
+                            <option value="100-200">1-2 Crores</option>
+                            <option value="above-200">Above 2 Crores</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <div class="field-icon">📏</div>
+                    <div class="field-content">
+                        <div class="field-label">Area</div>
+                        <select id="areaSelect">
+                            <option value="any">Any Size</option>
+                            <option value="1-3">1-3 Marla</option>
+                            <option value="3-5">3-5 Marla</option>
+                            <option value="5-10">5-10 Marla</option>
+                            <option value="10+">1+ Kanal</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="search-btn">
+                    <span>Search</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Why Choose Us Section -->
+        <section class="why-choose animate-on-scroll">
+            <h2>Why Choose PropertyHub?</h2>
+            <div class="features-grid">
+                <div class="feature-card hover-glow">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Secure Transactions</h3>
+                    <p>All property transactions are verified and secure with legal documentation support and escrow services</p>
+                </div>
+                <div class="feature-card hover-glow">
+                    <span class="feature-icon">👥</span>
+                    <h3>Trusted Network</h3>
+                    <p>Connect with verified buyers, sellers and real estate agents across Pakistan with our rating system</p>
+                </div>
+                <div class="feature-card hover-glow">
+                    <span class="feature-icon">📱</span>
+                    <h3>Easy Process</h3>
+                    <p>Simple and user-friendly platform to buy, sell or invest in properties with mobile app support</p>
+                </div>
+                <div class="feature-card hover-glow">
+                    <span class="feature-icon">🏆</span>
+                    <h3>Expert Support</h3>
+                    <p>24/7 customer support and expert advice for all your property needs with live chat assistance</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Property Types -->
+        <section class="property-types animate-on-scroll">
+            <h2>Browse by Property Type</h2>
+            <div class="property-grid">
+                <div class="property-type houses" onclick="filterByType('house')">
+                    <div class="property-count" id="houseCount">Loading...</div>
+                    <div class="property-label">Houses</div>
+                </div>
+                <div class="property-type apartments" onclick="filterByType('apartment')">
+                    <div class="property-count" id="apartmentCount">Loading...</div>
+                    <div class="property-label">Apartments</div>
+                </div>
+                <div class="property-type commercial" onclick="filterByType('commercial')">
+                    <div class="property-count" id="commercialCount">Loading...</div>
+                    <div class="property-label">Commercial</div>
+                </div>
+                <div class="property-type plots" onclick="filterByType('plot')">
+                    <div class="property-count" id="plotCount">Loading...</div>
+                    <div class="property-label">Plots</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Properties -->
+        <section class="featured-properties animate-on-scroll">
+            <h2>Featured Properties</h2>
+            <p class="featured-subtitle">Handpicked properties from our premium listings</p>
+            
+            <div class="properties-grid" id="propertiesGrid">
+                <div class="loading-spinner">Loading properties...</div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="search-btn" onclick="loadMoreProperties()" id="loadMoreBtn" style="display: none;">
+                    Load More Properties
+                </button>
+            </div>
+        </section>
+
+        <!-- Cities Section -->
+        <section class="cities animate-on-scroll">
+            <h2>Popular Cities</h2>
+            <p class="cities-subtitle">Explore properties in Pakistan's major cities</p>
+            
+            <div class="cities-grid">
+                <div class="city-card hover-glow" onclick="filterByCity('Lahore')">
+                    <div class="city-image">🏙️</div>
+                    <h3>Lahore</h3>
+                    <p id="lahoreCount">Loading...</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('Karachi')">
+                    <div class="city-image">🌊</div>
+                    <h3>Karachi</h3>
+                    <p id="karachiCount">Loading...</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('Islamabad')">
+                    <div class="city-image">🏔️</div>
+                    <h3>Islamabad</h3>
+                    <p id="islamabadCount">Loading...</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('Rawalpindi')">
+                    <div class="city-image">🏘️</div>
+                    <h3>Rawalpindi</h3>
+                    <p id="rawalnindiCount">Loading...</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('Faisalabad')">
+                    <div class="city-image">🏭</div>
+                    <h3>Faisalabad</h3>
+                    <p id="faisalabadCount">Loading...</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('Multan')">
+                    <div class="city-image">🕌</div>
+                    <h3>Multan</h3>
+                    <p id="multanCount">Loading...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add Property Button -->
+    <a href="add-property.html" class="add-property">
+        + Add Property
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>PropertyHub</h3>
+            <p>Pakistan's leading real estate platform. Find, buy, sell, and invest in properties with confidence.</p>
+            <p style="margin-top: 2rem; opacity: 0.7;">© 2025 PropertyHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Details - PropertyHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">PropertyHub</a>
+            <div class="nav-right">
+                <a href="index.html" class="nav-link">Home</a>
+                <div id="authSection"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="property-details-container" id="propertyDetailsContainer">
+        <div class="loading-spinner">Loading property details...</div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeContactModal()">&times;</span>
+            <h2>Contact Seller</h2>
+            <form id="contactForm" onsubmit="handleContactSeller(event)">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="senderName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="senderEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="senderPhone">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="message" rows="4" required></textarea>
+                </div>
+                <div id="contactError" class="error-message" style="display: none;"></div>
+                <div id="contactSuccess" class="success-message" style="display: none;"></div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/property-details.js"></script>
+</body>
+</html>

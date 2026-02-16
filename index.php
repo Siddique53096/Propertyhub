@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropertyHub - Buy & Sell Properties in Pakistan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: #fafafa;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .currency {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .nav-link:hover::before {
+            left: 0;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .register-btn, .signin-btn {
+            padding: 0.7rem 1.5rem;
+            border: 2px solid rgba(255,255,255,0.8);
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .register-btn::before, .signin-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: white;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .register-btn:hover::before, .signin-btn:hover::before {
+            left: 0;
+        }
+        
+        .register-btn:hover, .signin-btn:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 80px;
+            z-index: 90;
+        }
+        
+        .tabs-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 1.2rem 2rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            min-width: fit-content;
+        }
+        
+        .tab.active {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .tab:hover:not(.active) {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .tab-icon {
+            font-size: 1.3rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: white;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" dur="3s" values="0.1;0.3;0.1" repeatCount="indefinite"/></circle><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" dur="2s" values="0.1;0.4;0.1" repeatCount="indefinite"/></circle><circle cx="40" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"><animate attributeName="opacity" dur="2.5s" values="0.1;0.3;0.1" repeatCount="indefinite"/></circle></svg>');
+            z-index: 1;
+        }
+        
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 600px;
+        }
+        
+        /* Enhanced Search Form */
+        .search-form {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .form-field {
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-field::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .form-field:hover::before {
+            left: 100%;
+        }
+        
+        .form-field:hover, .form-field:focus-within {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .form-field input, .form-field select {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            background: transparent;
+            font-weight: 500;
+        }
+        
+        .field-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+        
+        .field-content {
+            padding-left: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .field-label {
+            font-size: 0.75rem;
+            color: #667eea;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .search-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .search-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .search-btn:hover::before {
+            left: 0;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Filter Toggle */
+        .filter-toggle {
+            display: none;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-toggle:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        /* Enhanced Why Choose Us Section */
+        .why-choose {
+            margin: 4rem 0;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .why-choose h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2d3748;
+            text-align: center;
+            font-weight: 800;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            color: #667eea;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: #718096;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        /* Enhanced Property Types */
+        .property-types {
+            margin: 5rem 0;
+        }
+        
+        .property-types h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2d3748;
+            text-align: center;
+            font-weight: 800;
+        }
+        
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .property-type {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            height: 250px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .property-type:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        
+        .property-type.houses::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1;
+        }
+        
+        .property-type.apartments::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            z-index: 1;
+        }
+        
+        .property-type.commercial::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            z-index: 1;
+        }
+        
+        .property-type.plots::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            z-index: 1;
+        }
+        
+        .property-type::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: 2;
+        }
+        
+        .property-type:hover::after {
+            transform: translateX(100%);
+        }
+        
+        .property-label {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            color: white;
+            font-size: 1.6rem;
+            font-weight: bold;
+            z-index: 3;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .property-count {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 3;
+        }
+        
+        /* Enhanced Featured Properties */
+        .featured-properties {
+            margin: 5rem 0;
+        }
+        
+        .featured-properties h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+            text-align: center;
+            font-weight: 800;
+        }
+        
+        .featured-subtitle {
+            color: #718096;
+            margin-bottom: 4rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .property-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .property-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            overflow: hidden;
+        }
+        
+        .property-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+            z-index: 1;
+        }
+        
+        .property-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #2d3748;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 3;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .heart-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+            z-index: 3;
+        }
+        
+        .heart-btn:hover {
+            background: white;
+            transform: scale(1.1);
+            color: #e53e3e;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .heart-btn.active {
+            background: #e53e3e;
+            color: white;
+        }
+        
+        .property-info {
+            padding: 2rem;
+        }
+        
+        .property-price {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #38a169;
+            margin-bottom: 0.5rem;
+        }
+        
+        .property-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .property-location {
+            color: #718096;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .property-features {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        
+        .property-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        
+        .contact-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .contact-btn:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Enhanced Cities Section */
+        .cities {
+            margin: 5rem 0;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 30px;
+        }
+        
+        .cities h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+            text-align: center;
+            font-weight: 800;
+        }
+        
+        .cities-subtitle {
+            color: #718096;
+            margin-bottom: 4rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .city-card {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            padding: 2rem;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .city-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .city-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .city-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+        
+        .city-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(45deg, #3182ce, #2c5aa0);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .city-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .city-card:hover .city-image::after {
+            transform: translateX(100%);
+        }
+        
+        .city-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+            font-weight: bold;
+        }
+        
+        .city-card p {
+            color: #718096;
+            font-size: 0.95rem;
+        }
+        
+        /* Add Property Button */
+        .add-property {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 8px 30px rgba(56, 161, 105, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .add-property:hover {
+            background: linear-gradient(135deg, #2f855a 0%, #38a169 100%);
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(56, 161, 105, 0.5);
+        }
+        
+        /* Enhanced Footer */
+        .footer {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer p {
+            color: #a0aec0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced Responsive Design */
+        @media (max-width: 1024px) {
+            .search-form {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            
+            .properties-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-right {
+                display: none;
+            }
+            
+            .nav-right.mobile-open {
+                display: flex;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .filter-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .tabs-container {
+                padding-bottom: 0.5rem;
+            }
+            
+            .tab {
+                padding: 1rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .add-property {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 1rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .property-card {
+                margin-bottom: 1rem;
+            }
+            
+            .cities {
+                padding: 3rem 1rem;
+            }
+            
+            .why-choose {
+                padding: 3rem 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Selection Styles */
+        ::selection {
+            background: #667eea;
+            color: white;
+        }
+        
+        /* Focus Styles */
+        *:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Enhanced Hover Effects */
+        .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Price Range Specific Styling */
+        .price-high {
+            color: #e53e3e;
+        }
+        
+        .price-medium {
+            color: #dd6b20;
+        }
+        
+        .price-low {
+            color: #38a169;
+        }
+        
+        /* Property Status Indicators */
+        .status-available {
+            background: #38a169;
+        }
+        
+        .status-sold {
+            background: #e53e3e;
+        }
+        
+        .status-pending {
+            background: #dd6b20;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f7fafc;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">PropertyHub</div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <div class="nav-right" id="navRight">
+                <div class="currency">🇵🇰 PKR</div>
+                <a href="add_property.php" class="nav-link">List your property</a>
+                <div class="auth-buttons">
+                    <a href="register.php" class="register-btn">Register</a>
+                    <a href="login.php" class="signin-btn">Sign in</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="tabs-container">
+            <a href="#" class="tab active" onclick="switchTab(this, 'buy')">
+                <span class="tab-icon">🏠</span>
+                Buy Property
+            </a>
+            <a href="#" class="tab" onclick="switchTab(this, 'sell')">
+                <span class="tab-icon">💰</span>
+                Sell Property
+            </a>
+            <a href="#" class="tab" onclick="switchTab(this, 'commercial')">
+                <span class="tab-icon">🏢</span>
+                Commercial
+            </a>
+            <a href="#" class="tab" onclick="switchTab(this, 'projects')">
+                <span class="tab-icon">🏗️</span>
+                New Projects
+            </a>
+            <a href="#" class="tab" onclick="switchTab(this, 'trends')">
+                <span class="tab-icon">📊</span>
+                Market Trends
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="animate-on-scroll">Find Your Dream Property</h1>
+            <p class="animate-on-scroll">Buy and sell properties across Pakistan with ease and confidence</p>
+            
+            <button class="filter-toggle" onclick="toggleFilters()">
+                <span>🔍</span> Advanced Search
+            </button>
+            
+            <form class="search-form animate-on-scroll" id="searchForm" onsubmit="handleSearch(event)">
+                <div class="form-field">
+                    <div class="field-icon">📍</div>
+                    <div class="field-content">
+                        <div class="field-label">Location</div>
+                        <input type="text" placeholder="City, area or property name" id="locationInput">
+                    </div>
+                </div>
+                <div class="form-field">
+                    <div class="field-icon">🏠</div>
+                    <div class="field-content">
+                        <div class="field-label">Property Type</div>
+                        <select id="propertyTypeSelect">
+                            <option value="all">All Types</option>
+                            <option value="house">House</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="plot">Plot</option>
+                            <option value="commercial">Commercial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <div class="field-icon">💰</div>
+                    <div class="field-content">
+                        <div class="field-label">Price Range</div>
+                        <select id="priceRangeSelect">
+                            <option value="any">Any Budget</option>
+                            <option value="under-50">Under 50 Lacs</option>
+                            <option value="50-100">50L - 1 Crore</option>
+                            <option value="100-200">1-2 Crores</option>
+                            <option value="above-200">Above 2 Crores</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <div class="field-icon">📏</div>
+                    <div class="field-content">
+                        <div class="field-label">Area</div>
+                        <select id="areaSelect">
+                            <option value="any">Any Size</option>
+                            <option value="1-3">1-3 Marla</option>
+                            <option value="3-5">3-5 Marla</option>
+                            <option value="5-10">5-10 Marla</option>
+                            <option value="10+">1+ Kanal</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="search-btn">
+                    <span>Search</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Property Types -->
+        <section class="property-types animate-on-scroll">
+            <h2>Browse by Property Type</h2>
+            <div class="property-grid">
+                <div class="property-type houses" onclick="filterByType('houses')">
+                    <div class="property-count">1,250+ Properties</div>
+                    <div class="property-label">Houses</div>
+                </div>
+                <div class="property-type apartments" onclick="filterByType('apartments')">
+                    <div class="property-count">890+ Properties</div>
+                    <div class="property-label">Apartments</div>
+                </div>
+                <div class="property-type commercial" onclick="filterByType('commercial')">
+                    <div class="property-count">420+ Properties</div>
+                    <div class="property-label">Commercial</div>
+                </div>
+                <div class="property-type plots" onclick="filterByType('plots')">
+                    <div class="property-count">650+ Properties</div>
+                    <div class="property-label">Plots</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Properties -->
+        <section class="featured-properties animate-on-scroll">
+            <h2>Featured Properties</h2>
+            <p class="featured-subtitle">Handpicked properties from our premium listings</p>
+            
+            <div class="properties-grid" id="propertiesGrid">
+                <!-- Properties will be dynamically loaded here -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="search-btn" onclick="loadMoreProperties()" id="loadMoreBtn">
+                    Load More Properties
+                </button>
+            </div>
+        </section>
+
+        <!-- Cities Section -->
+        <section class="cities animate-on-scroll">
+            <h2>Popular Cities</h2>
+            <p class="cities-subtitle">Explore properties in Pakistan's major cities</p>
+            
+            <div class="cities-grid">
+                <div class="city-card hover-glow" onclick="filterByCity('lahore')">
+                    <div class="city-image">🏙️</div>
+                    <h3>Lahore</h3>
+                    <p>2,450 Properties</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('karachi')">
+                    <div class="city-image">🌊</div>
+                    <h3>Karachi</h3>
+                    <p>3,120 Properties</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('islamabad')">
+                    <div class="city-image">🏔️</div>
+                    <h3>Islamabad</h3>
+                    <p>1,890 Properties</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('rawalpindi')">
+                    <div class="city-image">🏘️</div>
+                    <h3>Rawalpindi</h3>
+                    <p>1,340 Properties</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('faisalabad')">
+                    <div class="city-image">🏭</div>
+                    <h3>Faisalabad</h3>
+                    <p>980 Properties</p>
+                </div>
+                <div class="city-card hover-glow" onclick="filterByCity('multan')">
+                    <div class="city-image">🕌</div>
+                    <h3>Multan</h3>
+                    <p>750 Properties</p>
+                </div>
+            </div>
+        </section>
+        
+         <!-- Why Choose Us Section -->
+        <section class="why-choose animate-on-scroll">
+            <h2>Why Choose PropertyHub?</h2>
+            <div class="features-grid">
+                <div class="feature-card hover-glow">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Secure Transactions</h3>
+                    <p>All property transactions are verified and secure with legal documentation support and escrow services</p>
+                </div>
+                <div class="feature-card hover-glow">
+                    <span class="feature-icon">👥</span>
+                    <h3>Trusted Network</h3>
+                    <p>Connect with verified buyers, sellers and real estate agents across Pakistan with our rating system</p>
+                </div>
+                <div class="feature-card hover-glow">
+                    <span class="feature-icon">📱</span>
+                    <h3>Easy Process</h3>
+                    <p>Simple and user-friendly platform to buy, sell or invest in properties with mobile app support</p>
+                </div>
+                <div class="feature-card hover-glow">
+                    <span class="feature-icon">🏆</span>
+                    <h3>Expert Support</h3>
+                    <p>24/7 customer support and expert advice for all your property needs with live chat assistance</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add Property Button -->
+    <button class="add-property" onclick="window.location.href='index.php'">
+    + Add Property
+</button>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>PropertyHub</h3>
+            <p>Pakistan's leading real estate platform. Find, buy, sell, and invest in properties with confidence.</p>
+            <p style="margin-top: 2rem; opacity: 0.7;">© 2024 PropertyHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample property data
+        const properties = [
+            {
+                id: 1,
+                title: 'Modern 10 Marla House',
+                price: 12000000,
+                location: 'DHA Phase 5, Lahore',
+                city: 'lahore',
+                type: 'house',
+                beds: 4,
+                baths: 3,
+                parking: 2,
+                area: '10 Marla',
+                badge: 'FEATURED',
+                rating: 4.8,
+                image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400&h=250&fit=crop'
+            },
+            {
+                id: 2,
+                title: 'Luxury Apartment',
+                price: 8500000,
+                location: 'Gulberg III, Lahore',
+                city: 'lahore',
+                type: 'apartment',
+                beds: 3,
+                baths: 2,
+                parking: 1,
+                area: '1200 sq ft',
+                badge: 'HOT DEAL',
+                rating: 4.6,
+                image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop'
+            },
+            {
+                id: 3,
+                title: '5 Marla Plot',
+                price: 4500000,
+                location: 'Bahria Town, Islamabad',
+                city: 'islamabad',
+                type: 'plot',
+                area: '5 Marla',
+                badge: 'NEW',
+                rating: 4.7,
+                image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop'
+            },
+            {
+                id: 4,
+                title: 'Commercial Plaza',
+                price: 25000000,
+                location: 'MM Alam Road, Lahore',
+                city: 'lahore',
+                type: 'commercial',
+                floors: 4,
+                parking: 20,
+                area: '8000 sq ft',
+                badge: 'INVESTMENT',
+                rating: 4.9,
+                image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=250&fit=crop'
+            },
+            {
+                id: 5,
+                title: 'Brand New House',
+                price: 9500000,
+                location: 'Johar Town, Lahore',
+                city: 'lahore',
+                type: 'house',
+                beds: 5,
+                baths: 4,
+                parking: 2,
+                area: '8 Marla',
+                badge: 'URGENT',
+                rating: 4.5,
+                image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=250&fit=crop'
+            },
+            {
+                id: 6,
+                title: 'Penthouse Apartment',
+                price: 15000000,
+                location: 'Clifton, Karachi',
+                city: 'karachi',
+                type: 'apartment',
+                beds: 4,
+                baths: 3,
+                parking: 2,
+                area: '2500 sq ft',
+                badge: 'LUXURY',
+                rating: 4.9,
+                image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=250&fit=crop'
+            }
+        ];
+
+        let favorites = new Set();
+        let currentProperties = [...properties];
+        let displayedCount = 6;
+
+        // Format price function
+        function formatPrice(price) {
+            if (price >= 10000000) {
+                return `₨ ${(price / 10000000).toFixed(1)} Crore`;
+            } else if (price >= 100000) {
+                return `₨ ${(price / 100000).toFixed(0)} Lacs`;
+            }
+            return `₨ ${price.toLocaleString()}`;
+        }
+
+        // Toggle favorite
+        function toggleFavorite(propertyId) {
+            if (favorites.has(propertyId)) {
+                favorites.delete(propertyId);
+            } else {
+                favorites.add(propertyId);
+            }
+            
+            const heartBtn = document.querySelector(`[data-property-id="${propertyId}"]`);
+            if (heartBtn) {
+                heartBtn.classList.toggle('active');
+                heartBtn.innerHTML = favorites.has(propertyId) ? '❤️' : '🤍';
+            }
+        }
+
+        // Create property card
+        function createPropertyCard(property) {
+            const priceClass = property.price >= 20000000 ? 'price-high' : 
+                              property.price >= 10000000 ? 'price-medium' : 'price-low';
+            
+            return `
+                <div class="property-card hover-glow">
+                    <div class="property-image" style="background-image: url('${property.image}');">
+                        ${property.badge ? `<div class="property-badge">${property.badge}</div>` : ''}
+                        <button class="heart-btn ${favorites.has(property.id) ? 'active' : ''}" 
+                                onclick="toggleFavorite(${property.id})" 
+                                data-property-id="${property.id}">
+                            ${favorites.has(property.id) ? '❤️' : '🤍'}
+                        </button>
+                    </div>
+                    <div class="property-info">
+                        <div class="property-price ${priceClass}">${formatPrice(property.price)}</div>
+                        <div class="property-title">${property.title}</div>
+                        <div class="property-location">📍 ${property.location}</div>
+                        <div class="property-features">
+                            ${property.beds ? `<div class="property-feature">🛏️ ${property.beds} Bed</div>` : ''}
+                            ${property.baths ? `<div class="property-feature">🚿 ${property.baths} Bath</div>` : ''}
+                            ${property.parking ? `<div class="property-feature">🚗 ${property.parking} Parking</div>` : ''}
+                            ${property.floors ? `<div class="property-feature">🏢 ${property.floors} Floors</div>` : ''}
+                            <div class="property-feature">📏 ${property.area}</div>
+                        </div>
+                        <button class="contact-btn" onclick="contactSeller(${property.id})">
+                            📞 Contact Seller
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load properties
+        function loadProperties() {
+            const grid = document.getElementById('propertiesGrid');
+            grid.innerHTML = currentProperties.slice(0, displayedCount).map(createPropertyCard).join('');
+            
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (displayedCount >= currentProperties.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+        }
+
+        // Load more properties
+        function loadMoreProperties() {
+            displayedCount += 3;
+            loadProperties();
+        }
+
+        // Filter properties
+        function filterProperties(filters) {
+            let filtered = [...properties];
+
+            if (filters.location) {
+                filtered = filtered.filter(property => 
+                    property.location.toLowerCase().includes(filters.location.toLowerCase()) ||
+                    property.city.toLowerCase().includes(filters.location.toLowerCase())
+                );
+            }
+
+            if (filters.type && filters.type !== 'all') {
+                filtered = filtered.filter(property => property.type === filters.type);
+            }
+
+            if (filters.priceRange && filters.priceRange !== 'any') {
+                filtered = filtered.filter(property => {
+                    switch (filters.priceRange) {
+                        case 'under-50':
+                            return property.price < 5000000;
+                        case '50-100':
+                            return property.price >= 5000000 && property.price < 10000000;
+                        case '100-200':
+                            return property.price >= 10000000 && property.price < 20000000;
+                        case 'above-200':
+                            return property.price >= 20000000;
+                        default:
+                            return true;
+                    }
+                });
+            }
+
+            currentProperties = filtered;
+            displayedCount = 6;
+            loadProperties();
+        }
+
+        // Handle search
+        function handleSearch(event) {
+            event.preventDefault();
+            
+            const filters = {
+                location: document.getElementById('locationInput').value,
+                type: document.getElementById('propertyTypeSelect').value,
+                priceRange: document.getElementById('priceRangeSelect').value,
+                area: document.getElementById('areaSelect').value
+            };
+
+            filterProperties(filters);
+            
+            // Show loading animation
+            const searchBtn = event.target.querySelector('.search-btn');
+            const originalText = searchBtn.innerHTML;
+            searchBtn.innerHTML = '<div class="loading"></div>';
+            
+            setTimeout(() => {
+                searchBtn.innerHTML = originalText;
+            }, 1000);
+        }
+
+        // Filter by type
+        function filterByType(type) {
+            document.getElementById('propertyTypeSelect').value = type;
+            filterProperties({ type: type });
+        }
+
+        // Filter by city
+        function filterByCity(city) {
+            document.getElementById('locationInput').value = city;
+            filterProperties({ location: city });
+        }
+
+        // Switch tabs
+        function switchTab(element, tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Update search form based on tab
+            const form = document.getElementById('searchForm');
+            // Add tab-specific functionality here
+        }
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const navRight = document.getElementById('navRight');
+            navRight.classList.toggle('mobile-open');
+        }
+
+        // Toggle filters
+        function toggleFilters() {
+            const searchForm = document.getElementById('searchForm');
+            searchForm.style.display = searchForm.style.display === 'none' ? 'grid' : 'none';
+        }
+
+        // Contact seller
+        function contactSeller(propertyId) {
+            const property = properties.find(p => p.id === propertyId);
+            alert(`Contacting seller for: ${property.title}\n\nPhone: +92 300 1234567\nEmail: seller@propertyhub.pk`);
+        }
+
+        // Show add property form
+        function showAddPropertyForm() {
+            alert('Add Property form will open here. This would typically redirect to a detailed property submission form.');
+        }
+
+        // Intersection Observer for animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProperties();
+            setupScrollAnimations();
+            
+            // Add some sample favorites
+            favorites.add(1);
+            favorites.add(3);
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const navRight = document.getElementById('navRight');
+            if (window.innerWidth > 768) {
+                navRight.classList.remove('mobile-open');
+            }
+        });
+    </script>
+</body>
+</html>

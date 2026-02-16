@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Properties - PropertyHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">PropertyHub</a>
+            <div class="nav-right">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="add-property.html" class="nav-link">Add Property</a>
+                <a href="favorites.html" class="nav-link">Favorites</a>
+                <button onclick="handleLogout()" class="signin-btn">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <div class="page-header">
+            <h1>My Properties</h1>
+            <p>Manage your property listings</p>
+            <a href="add-property.html" class="add-btn">+ Add New Property</a>
+        </div>
+
+        <div class="properties-grid" id="myPropertiesGrid">
+            <div class="loading-spinner">Loading your properties...</div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/my-properties.js"></script>
+</body>
+</html>

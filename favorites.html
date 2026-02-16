@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites - PropertyHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">PropertyHub</a>
+            <div class="nav-right">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="my-properties.html" class="nav-link">My Properties</a>
+                <a href="add-property.html" class="nav-link">Add Property</a>
+                <button onclick="handleLogout()" class="signin-btn">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <div class="page-header">
+            <h1>My Favorites</h1>
+            <p>Properties you saved for later</p>
+        </div>
+
+        <div class="properties-grid" id="favoritesGrid">
+            <div class="loading-spinner">Loading your favorites...</div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/favorites.js"></script>
+</body>
+</html>
